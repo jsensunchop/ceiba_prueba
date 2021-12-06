@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prueba_tecnica/bloc/publications_bloc/publication_bloc.dart';
 import 'package:prueba_tecnica/bloc/user_bloc/user_bloc.dart';
 import 'package:prueba_tecnica/data/repositories/user_repo.dart';
-import 'package:prueba_tecnica/ui/home_page.dart';
-import 'package:prueba_tecnica/ui/home_screen.dart';
+import 'package:prueba_tecnica/ui/home_page/home_page.dart';
+import 'package:prueba_tecnica/ui/home_page/home_screen.dart';
+import 'package:prueba_tecnica/style/theme.dart' as Style;
 
 void main() {
   final userRepo = UserRepo();
@@ -28,8 +29,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      color: Style.Colors.mainColor,
       title: 'Flutter Demo',
       theme: ThemeData(
+        primaryColor: Style.Colors.mainColor,
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -39,7 +42,6 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
       ),
       home: HomeScreen()
     );

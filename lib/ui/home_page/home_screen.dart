@@ -6,7 +6,6 @@ import 'package:prueba_tecnica/data/repositories/user_repo.dart';
 import 'home_page.dart';
 
 class HomeScreen extends StatelessWidget {
-  UserRepo _userRepo = UserRepo();
 
   @override
   Widget build(BuildContext context) {

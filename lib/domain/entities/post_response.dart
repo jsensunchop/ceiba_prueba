@@ -6,12 +6,13 @@ part 'post_response.g.dart';
 
 @JsonSerializable()
 class PostResponse {
-  int userId;
-  int id;
-  String title;
-  String body;
 
-  PostResponse(this.userId, this.id, this.title, this.body);
+  final int userId;
+  final String title;
+  final String body;
+
+
+  PostResponse(this.title, this.body, this.userId);
 
   factory PostResponse.fromJson(Map<String, dynamic> json) => _$PostResponseFromJson(json);
 

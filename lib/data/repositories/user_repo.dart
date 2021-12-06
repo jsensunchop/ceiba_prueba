@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:prueba_tecnica/data/services/rest_client.dart';
 import 'package:prueba_tecnica/domain/entities/post_response.dart';
+import 'package:prueba_tecnica/domain/entities/publications_response.dart';
 import 'package:prueba_tecnica/domain/entities/user_response.dart';
 
 class UserRepo {

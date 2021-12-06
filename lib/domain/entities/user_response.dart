@@ -4,9 +4,9 @@ part 'user_response.g.dart';
 
 ///PODO ApiResponse
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable()
 class UserResponse {
-  // final int id;
+  final int id;
   final String name;
   final String username;
   final String email;
@@ -15,7 +15,7 @@ class UserResponse {
   // final String website;
   // final Company company;
 
-  UserResponse(this.name, this.username, this.email, this.phone);
+  UserResponse(this.id, this.name, this.username, this.email, this.phone);
 
   factory UserResponse.fromJson(Map<String, dynamic> json) =>
       _$UserResponseFromJson(json);
