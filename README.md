@@ -4,7 +4,7 @@ Prueba tecnica
 
 ## Getting Started
 
-Tecnologias usadas: Retrofit, Bloc, SQFLite
+Tecnologias usadas: Retrofit, Bloc, SQFLite, Clean Architecture.
 
 ## Introducción :
 Este repositorio consiste en mostrar las habilidades técnicas de Flutter a travéz de la resolución de los problemas planteados .
