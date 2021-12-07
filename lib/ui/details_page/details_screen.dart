@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:prueba_tecnica/bloc/publications_bloc/publication_bloc.dart';
-import 'package:prueba_tecnica/bloc/user_bloc/user_bloc.dart';
-import 'package:prueba_tecnica/data/repositories/user_repo.dart';
+import 'package:prueba_tecnica/domain/bloc/publications_bloc/publication_bloc.dart';
 
 import 'details_page.dart';
 
 class DetailsScreen extends StatelessWidget {
-  DetailsScreen({Key? key, required this.userId, required this.userName, required this.userEmail, required this.userPhone}) : super(key: key);
+  const DetailsScreen({Key? key, required this.userId, required this.userName, required this.userEmail, required this.userPhone}) : super(key: key);
   final int userId;
   final String userName;
   final String userEmail;
   final String userPhone;
 
+
+  ///BLOC PARA LLENAR LA BASE DE DATOS POR MEDIO DEL API
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -3,10 +3,11 @@ import 'package:path/path.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:prueba_tecnica/domain/entities/post_response.dart';
-import 'package:prueba_tecnica/domain/entities/publications_response.dart';
 import 'package:prueba_tecnica/domain/entities/user_response.dart';
 import 'package:sqflite/sqflite.dart';
 
+
+///INSTANCIA Y DEFINICION DE LAS TABLAS DE LA BASE DE DATOS
 class DBProvider {
   static Database? _database;
   static final DBProvider db = DBProvider._();
@@ -23,13 +24,10 @@ class DBProvider {
     return _database!;
   }
 
-  // Create the database and the Employee table
+  // Create the database and the User table
   Future<Database> initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, 'posts_manager.db');
-
-    print(path);
-
     return await openDatabase(path, version: 2, onOpen: (db) {},
         onCreate: (Database db, int version) async {
           await db.execute('''CREATE TABLE Publication(
@@ -50,6 +48,7 @@ class DBProvider {
         });
   }
 
+  // Insert user on database
   createUser(UserResponse newUser) async {
     // final userid = newUser.id;
     final name = newUser.name;
@@ -66,7 +65,7 @@ class DBProvider {
 
     return res;
   }
-  // Insert employee on database
+  // Insert publication on database
   createPublication(PostResponse newPost) async {
     final title = newPost.title;
     final body = newPost.body;
@@ -81,14 +80,14 @@ class DBProvider {
     return res;
   }
 
-  // Delete all employees
+  // Delete all users
   Future<int> deleteAllUsers() async {
     final db = await database;
     final res = await db.rawDelete('DELETE FROM User');
 
     return res;
   }
-  // Delete all employees
+  // Delete all publications
   Future<int> deleteAllPosts() async {
     final db = await database;
     final res = await db.rawDelete('DELETE FROM Publication');
@@ -96,6 +95,7 @@ class DBProvider {
     return res;
   }
 
+  // Get all publications
   Future<List<PostResponse>> getAllPosts() async {
     final db = await database;
     final res = await db.rawQuery("SELECT * FROM Publication");
@@ -106,6 +106,7 @@ class DBProvider {
     return list;
   }
 
+  // Get all publications
   Future<List<PostResponse>> getPublications() async {
     final db = await database;
     final res = await db.rawQuery('SELECT * FROM Publication');
@@ -116,6 +117,7 @@ class DBProvider {
     return list;
   }
 
+  // Get all users
   Future<List<UserResponse>> getAllUsers() async {
     final db = await database;
     final res = await db.rawQuery('SELECT * FROM User');
@@ -126,6 +128,7 @@ class DBProvider {
     return list;
   }
 
+// Filter users via name
   Future<List<UserResponse>> searchUsers(String keyword) async {
     final db = await database;
 
@@ -139,6 +142,7 @@ class DBProvider {
 
   }
 
+  // Filter posts via userId
   Future<List<PostResponse>> searchPosts(int user) async {
     final db = await database;
     List<Map<String, dynamic>> allRows = await db

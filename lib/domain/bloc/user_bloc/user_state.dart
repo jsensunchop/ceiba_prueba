@@ -8,6 +8,7 @@ class InitialUserState extends UserState{
   List<Object> get props => [];
 }
 
+// success state
 class UserFetched extends UserState {
   final List<UserResponse> user;
 
@@ -16,13 +17,13 @@ class UserFetched extends UserState {
   @override
   List<Object> get props => [user];
 }
-
+//loading state
 class FetchingUsers extends UserState{
   @override
   List<Object> get props => [];
 
-
-}class Fetching extends UserState{
+//error state
+}class ErrorFetching extends UserState{
   @override
   List<Object> get props => [];
 }

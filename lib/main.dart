@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:prueba_tecnica/bloc/publications_bloc/publication_bloc.dart';
-import 'package:prueba_tecnica/bloc/user_bloc/user_bloc.dart';
+import 'package:prueba_tecnica/domain/bloc/publications_bloc/publication_bloc.dart';
+import 'package:prueba_tecnica/domain/bloc/user_bloc/user_bloc.dart';
 import 'package:prueba_tecnica/data/repositories/user_repo.dart';
-import 'package:prueba_tecnica/ui/home_page/home_page.dart';
 import 'package:prueba_tecnica/ui/home_page/home_screen.dart';
-import 'package:prueba_tecnica/style/theme.dart' as Style;
+import 'package:prueba_tecnica/ui/style/theme.dart' as Style;
 
 void main() {
   final userRepo = UserRepo();
@@ -18,12 +17,14 @@ void main() {
         return UserBloc(userRepo)..add(FetchUser());
       }),
     ],
-        child: MyApp())
+        child: const MyApp())
 
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
 
   // This widget is the root of your application.
   @override
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
       ),
-      home: HomeScreen()
+      home: const HomeScreen()
     );
   }
 }

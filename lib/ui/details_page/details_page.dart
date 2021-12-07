@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:prueba_tecnica/data/provider/db_provider.dart';
 import 'package:prueba_tecnica/domain/entities/post_response.dart';
-import 'package:prueba_tecnica/domain/entities/publications_response.dart';
-import 'package:prueba_tecnica/style/theme.dart' as Style;
+import 'package:prueba_tecnica/ui/style/theme.dart' as Style;
 
 class DetailsPage extends StatefulWidget {
   const DetailsPage(
@@ -31,9 +30,11 @@ class _DetailsPageState extends State<DetailsPage> {
 
   Timer? debouncer;
 
+  @override
   void initState() {
     super.initState();
   }
+
   @override
   void dispose() {
     debouncer?.cancel();
@@ -41,9 +42,9 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   void debounce(
-      VoidCallback callback, {
-        Duration duration = const Duration(milliseconds: 1000),
-      }) {
+    VoidCallback callback, {
+    Duration duration = const Duration(milliseconds: 1000),
+  }) {
     if (debouncer != null) {
       debouncer!.cancel();
     }
@@ -55,19 +56,18 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Prueba de ingreso"),
+          title: const Text("Prueba de ingreso"),
           backgroundColor: Style.Colors.mainColor,
         ),
+        ///LLAMAR DATOS DE LA DB
         body: FutureBuilder<List<PostResponse>>(
+            ///FUNCIONALIDAD DE BUSCAR POST POR ID DE USUARIO DESDE LA DB
             future: dbHelper.searchPosts(widget.userId),
             builder: (BuildContext context,
                 AsyncSnapshot<List<PostResponse>> snapshot) {
-              print(widget.userId);
-              // print(snapshot.data![0].body);
-
               if (snapshot.data == null) {
                 return const Center(
-                  child: Text("Nel"),
+                  child: CircularProgressIndicator(),
                 );
               } else {
                 return Column(
@@ -77,61 +77,61 @@ class _DetailsPageState extends State<DetailsPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(7),
                         child: ListTile(
-                            title: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  height: 7,
-                                ),
-                                Text(
-                                 widget.userName,
-                                  style: const TextStyle(
-                                      fontSize: 14.0,
-                                      color: Style.Colors.mainColor,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(
-                                  height: 7,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    const Icon(Icons.phone,
-                                        size: 15,
-                                        color: Style.Colors.mainColor),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      widget.userPhone,
-                                      style: TextStyle(fontSize: 14.0),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 7,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    const Icon(Icons.mail,
-                                        size: 15,
-                                        color: Style.Colors.mainColor),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      widget.userEmail,
-                                      style: TextStyle(fontSize: 14.0),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            ),
+                          title: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 7,
+                              ),
+                              ///NOMBRE DE USUARIO SELECCIONADO
+                              Text(
+                                widget.userName,
+                                style: const TextStyle(
+                                    fontSize: 14.0,
+                                    color: Style.Colors.mainColor,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 7,
+                              ),
+                              ///TELEFONO DE USUARIO SELECCIONADO
+                              Row(
+                                children: <Widget>[
+                                  const Icon(Icons.phone,
+                                      size: 15, color: Style.Colors.mainColor),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    widget.userPhone,
+                                    style: const TextStyle(fontSize: 14.0),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 7,
+                              ),
+                              ///EMAIL DE USUARIO SELECCIONADO
+                              Row(
+                                children: <Widget>[
+                                  const Icon(Icons.mail,
+                                      size: 15, color: Style.Colors.mainColor),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    widget.userEmail,
+                                    style: const TextStyle(fontSize: 14.0),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-
-
+                    ///MOSTRAR LISTA DE PUBLICACIONES PERTENECIENTES AL USUARIO
                     Expanded(
                       child: ListView.separated(
                           separatorBuilder: (BuildContext context, int index) {
@@ -143,30 +143,30 @@ class _DetailsPageState extends State<DetailsPage> {
                           shrinkWrap: true,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
-                            return Container(
+                            return SizedBox(
                               height: MediaQuery.of(context).size.height * 0.25,
                               child: Card(
                                 elevation: 1,
                                 child: Padding(
-                                  padding: EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(8),
                                   child: ListTile(
                                     leading: Text(
                                       snapshot.data![index].userId.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 14.0,
                                           color: Style.Colors.mainColor,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     title: Text(
                                       snapshot.data![index].title,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 14.0,
                                           color: Style.Colors.mainColor,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     subtitle: Text(
                                       snapshot.data![index].body,
-                                      style: TextStyle(fontSize: 14.0),
+                                      style: const TextStyle(fontSize: 14.0),
                                     ),
                                   ),
                                 ),
@@ -177,8 +177,6 @@ class _DetailsPageState extends State<DetailsPage> {
                   ],
                 );
               }
-            })
-
-    );
+            }));
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prueba_tecnica/data/provider/db_provider.dart';
 import 'package:prueba_tecnica/data/repositories/user_repo.dart';
 import 'package:prueba_tecnica/domain/entities/post_response.dart';
-import 'package:prueba_tecnica/domain/entities/publications_response.dart';
 
 
 part 'publication_event.dart';
@@ -18,7 +17,6 @@ class PublicationBloc extends Bloc<PublicationEvent, PublicationState> {
 
   @override
   void onTransition(Transition<PublicationEvent, PublicationState> transition) {
-    print(transition);
     super.onTransition(transition);
   }
 
@@ -27,19 +25,28 @@ class PublicationBloc extends Bloc<PublicationEvent, PublicationState> {
     if (event is FetchPublication) {
       yield FetchingPublications();
       try {
+        //consuming api
         final data = await userRepo.fetchPosts();
-        DBProvider.db.database;
-        print(data.length);
 
+        //instantiate database
+        DBProvider.db.database;
+
+        //delete previous saved POSTS Database Table
+        DBProvider.db.deleteAllPosts();
+
+        //fill PUBLICACION table with api data
         for (var pub in data) {
           DBProvider.db.createPublication(pub);
         }
-        final data_db1 = await DBProvider.db.getPublications();
 
-        yield PublicationsFetched(data_db1);
+        //get the Posts table
+        final dataDb1 = await DBProvider.db.getPublications();
+
+        //database successfully fetched
+        yield PublicationsFetched(dataDb1);
       } catch (error) {
-        yield Fetching();
-        print(error);
+        ///EVENTO DE ERROR
+        yield ErrorFetching();
       }
     }
   }

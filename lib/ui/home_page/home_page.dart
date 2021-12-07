@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 
 import 'package:prueba_tecnica/data/provider/db_provider.dart';
 import 'package:prueba_tecnica/domain/entities/user_response.dart';
-import 'package:prueba_tecnica/style/theme.dart' as Style;
-import 'package:prueba_tecnica/ui/details_page/details_page.dart';
+import 'package:prueba_tecnica/ui/style/theme.dart' as Style;
 import 'package:prueba_tecnica/ui/details_page/details_screen.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -17,6 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Timer? debouncer;
+  ///INICIALIZAR LA BASE DE DATOS
   final dbHelper = DBProvider.db;
   String keyword = '';
   int userId = 0;
@@ -25,31 +27,6 @@ class _HomePageState extends State<HomePage> {
   late String userPhone;
 
   @override
-  void initState() {
-    super.initState();
-
-
-  }
-
-
-
-  @override
-  void dispose() {
-    debouncer?.cancel();
-    super.dispose();
-  }
-
-  void debounce(
-      VoidCallback callback, {
-        Duration duration = const Duration(milliseconds: 1000),
-      }) {
-    if (debouncer != null) {
-      debouncer!.cancel();
-    }
-
-    debouncer = Timer(duration, callback);
-  }
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -57,8 +34,11 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Style.Colors.mainColor,
       ),
 
+      ///LLAMANDO LA DATA DE LA DB
       body: FutureBuilder<List<UserResponse>>(
+        ///FILTRO DE USUARIOS POR PALABRA
         future: dbHelper.searchUsers(keyword),
+
           builder: (BuildContext context, AsyncSnapshot<List<UserResponse>> snapshot) {
 
 
@@ -69,6 +49,8 @@ class _HomePageState extends State<HomePage> {
           }else{
             return Column(
               children: [
+
+                ///CREACION DEL WIDGET DE FILTRO DE USUARIOS
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
@@ -85,6 +67,7 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
+                ///CREACION DE LA LISTA DE USUARIOS DEL API
                 Expanded(
                   child: ListView.separated(
                       separatorBuilder: (BuildContext context, int index) {
@@ -98,10 +81,12 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         return SizedBox(
                           height: MediaQuery.of(context).size.height * 0.19,
+                          ///WIDGET DE TARJETA
                           child: Card(
                             elevation: 1,
                             child: Padding(
                               padding: const EdgeInsets.all(7),
+                              ///ORGANIZACION DE LA INFORMACION DE LA TARJETA
                               child: ListTile(
                                   title: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -110,6 +95,7 @@ class _HomePageState extends State<HomePage> {
                                       const SizedBox(
                                         height: 7,
                                       ),
+                                      ///NOMBRE DE USUARIO
                                       Text(
                                         snapshot.data![index].name,
                                         style: const TextStyle(
@@ -120,6 +106,7 @@ class _HomePageState extends State<HomePage> {
                                       const SizedBox(
                                         height: 7,
                                       ),
+                                      ///TELEFONO DE USUARIO
                                       Row(
                                         children: <Widget>[
                                           const Icon(Icons.phone,
@@ -130,13 +117,14 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           Text(
                                             snapshot.data![index].phone,
-                                            style: TextStyle(fontSize: 14.0),
+                                            style: const TextStyle(fontSize: 14.0),
                                           ),
                                         ],
                                       ),
                                       const SizedBox(
                                         height: 7,
                                       ),
+                                      ///EMAIL DE USUARIO
                                       Row(
                                         children: <Widget>[
                                           const Icon(Icons.mail,
@@ -147,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           Text(
                                             snapshot.data![index].email,
-                                            style: TextStyle(fontSize: 14.0),
+                                            style: const TextStyle(fontSize: 14.0),
                                           ),
                                         ],
                                       ),
@@ -158,6 +146,8 @@ class _HomePageState extends State<HomePage> {
                                       const SizedBox(
                                         height: 40,
                                       ),
+
+                                      ///MANEJO DE EVENTOS A LA SIGUIENTE PANTALLA DE PUBLICACIONES DE USUARIO
                                       InkWell(
                                         onTap: (){
                                           userId = snapshot.data![index].id;

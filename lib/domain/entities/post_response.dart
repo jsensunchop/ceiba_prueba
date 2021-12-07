@@ -3,6 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 part 'post_response.g.dart';
 
 ///PODO ApiResponse
+///
+//Post model
 
 @JsonSerializable()
 class PostResponse {

@@ -7,7 +7,7 @@ class InitialPublicationState extends PublicationState{
   @override
   List<Object> get props => [];
 }
-
+// success state
 class PublicationsFetched extends PublicationState {
   final List<PostResponse> posts;
 
@@ -16,13 +16,13 @@ class PublicationsFetched extends PublicationState {
   @override
   List<Object> get props => [posts];
 }
-
+//loading state
 class FetchingPublications extends PublicationState{
   @override
   List<Object> get props => [];
 
-
-}class Fetching extends PublicationState{
+//error state
+}class ErrorFetching extends PublicationState{
   @override
   List<Object> get props => [];
 }

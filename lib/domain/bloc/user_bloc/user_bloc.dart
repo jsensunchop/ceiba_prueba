@@ -18,7 +18,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   @override
   void onTransition(Transition<UserEvent, UserState> transition) {
-    print(transition);
     super.onTransition(transition);
   }
 
@@ -27,18 +26,22 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (event is FetchUser) {
       yield FetchingUsers();
       try {
+        //consuming api
         final data = await userRepo.fetchUsers();
         // DBProvider.db.database;
+        //delete previous saved User Database Table
         DBProvider.db.deleteAllUsers();
-        // DBProvider.db.getPublications();
+        //fill User table with api data
         for (var age in data) {
           DBProvider.db.createUser(age);
         }
-        final data_db = await DBProvider.db.getAllUsers();
-        yield UserFetched(data_db);
+        //get the User table
+        final dataDb = await DBProvider.db.getAllUsers();
+
+        //database successfully fetched
+        yield UserFetched(dataDb);
       } catch (error) {
-        yield Fetching();
-        print("error = ${error}");
+        yield ErrorFetching();
       }
     }
   }
